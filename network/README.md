@@ -5,7 +5,8 @@
 Drunix (github.com/npci/drunix) is NPCI's open-source, enterprise-grade DLT —
 an enhanced fork of Hyperledger Fabric, **backwards compatible with Fabric
 v2.5.x**. The WAPSI chaincode is written against the standard Fabric
-`contractapi`, so it deploys on Drunix **unmodified**.
+`contractapi`, so it is designed to deploy on Drunix without chaincode changes;
+the Drunix network path still requires validation in a Drunix environment.
 
 Drunix features relevant to WAPSI:
 

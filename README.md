@@ -176,15 +176,15 @@ deadlines, and collects multi-party approvals for restoration actions that
 banks execute. Account privacy is preserved via per-bank HMAC tokens.
 
 **4. Implementation Approach**
-Fabric-v2.5-compatible Go chaincode (works on Drunix unmodified) with the
+Fabric-v2.5-compatible Go chaincode (intended for Drunix integration) with the
 seven core functions; endorsement restricted to the attesting bank; majority
 approval including the LEA for restoration. Node/Express gateway using
 fabric-gateway; React console with a live money-trail graph and rule
 switcher; Python simulator for reproducible scenarios. Tracing logic is
 unit-tested and cross-validated across three independent implementations
 (Go, Python, JavaScript) to the paisa. Live demo runs on a Hyperledger
-Fabric v2.5 test-network fallback; the same chaincode deploys unmodified on
-Drunix (target platform) via one `network.sh` flag.
+Fabric v2.5 test-network fallback; Drunix deployment is the target integration
+path and is not represented as a completed production deployment here.
 
 **5. Technology Stack**
 Hyperledger Fabric v2.5.x (Drunix-compatible; live demo on the Fabric
@@ -202,10 +202,10 @@ Aug 2026 directive; designed to sit beneath CFCFRMS/Money Restoration Module
 and extendable to NPCI's UDIR flows.
 
 **7. GitHub Repository URL**
-`<add after push>`
+https://github.com/Varshini-arsh/wapsi
 
 **8. Pitch Deck URL**
-`<add after export>`
+Attach the exported deck separately in the hackathon submission.
 
 ## Testing
 
@@ -225,7 +225,7 @@ cd gateway && node -e "require('./engine')"   # engine mirror used in demo mode
 
 ## Team
 
-`<add names/roles>`
+Varshini Arsh — project lead and implementation
 
 ---
 

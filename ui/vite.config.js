@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // WAPSI_API lets the UI service point at the demo gateway (4001)
-      // or the fabric gateway (4000). Default: fabric gateway.
-      "/api": process.env.WAPSI_API || "http://localhost:4000",
+      // Presentation target: the Fabric gateway. The demo gateway remains
+      // available directly on port 4001 for fallback testing.
+      "/api": "http://localhost:4000",
     },
   },
 });
