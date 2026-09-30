@@ -23,12 +23,22 @@ const MSP_ID = process.env.WAPSI_MSP || "Org1MSP";
 // MSP "Org1MSP" -> org name "org1" (strip the MSP suffix)
 const ORG_DOMAIN = process.env.WAPSI_ORG_DOMAIN || `${MSP_ID.replace(/MSP$/, "").toLowerCase()}.example.com`;
 const ORG_USER = process.env.WAPSI_ORG_USER || `User1@${ORG_DOMAIN}`;
-const ORG_PEER = process.env.WAPSI_ORG_PEER || `peer0.${ORG_DOMAIN}`;
-const CRYPTO_PATH = path.resolve(__dirname, "../network/organizations/peerOrganizations", ORG_DOMAIN);
+const NETWORK_ROOT = process.env.WAPSI_NETWORK_ROOT || [
+  path.resolve(process.env.HOME || process.env.USERPROFILE || "", ".wapsi/drunix/drunix-network/test-network"),
+  path.resolve(process.env.HOME || process.env.USERPROFILE || "", ".wapsi/fabric-samples/test-network"),
+  path.resolve(__dirname, "../network"),
+].find((p) => fs.existsSync(path.join(p, "organizations"))) || path.resolve(__dirname, "../network");
+const IS_DRUNIX = NETWORK_ROOT.includes("drunix");
+const ORG_PEER = process.env.WAPSI_ORG_PEER || `${IS_DRUNIX ? "peer1" : "peer0"}.${ORG_DOMAIN}`;
+const CRYPTO_PATH = path.join(NETWORK_ROOT, "organizations/peerOrganizations", ORG_DOMAIN);
 const KEY_DIR = path.join(CRYPTO_PATH, `users/${ORG_USER}/msp/keystore`);
 const CERT_DIR = path.join(CRYPTO_PATH, `users/${ORG_USER}/msp/signcerts`);
-const TLS_CERT = path.join(CRYPTO_PATH, `peers/${ORG_PEER}/tls/ca.crt`);
-const PEER_ENDPOINT = process.env.WAPSI_PEER || "localhost:7051";
+const TLS_CERT = IS_DRUNIX
+  ? path.join(CRYPTO_PATH, `peers/${ORG_PEER}/tls/tlscacerts/tls-localhost-${MSP_ID === "Org2MSP" ? "8054" : "7054"}-ca-${MSP_ID.replace(/MSP$/, "").toLowerCase()}.pem`)
+  : path.join(CRYPTO_PATH, `peers/${ORG_PEER}/tls/ca.crt`);
+const DEFAULT_PEER_PORT = IS_DRUNIX ? (MSP_ID === "Org2MSP" ? "9061" : "7061") : (MSP_ID === "Org2MSP" ? "8051" : "7051");
+const PEER_ENDPOINT = process.env.WAPSI_PEER || `localhost:${DEFAULT_PEER_PORT}`;
+const TLS_SERVER_NAME = process.env.WAPSI_TLS_SERVER_NAME || `${IS_DRUNIX ? "peer0" : ORG_PEER}.${ORG_DOMAIN}`;
 
 let contract = null;
 
@@ -45,7 +55,7 @@ async function getContract() {
   };
   const tlsRootCert = fs.readFileSync(TLS_CERT);
   const peer = await new grpc.Client(PEER_ENDPOINT, grpc.credentials.createSsl(tlsRootCert), {
-    "grpc.ssl_target_name_override": ORG_PEER,
+    "grpc.ssl_target_name_override": TLS_SERVER_NAME,
   });
   contract = (await connect({
     client: peer,

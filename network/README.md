@@ -5,8 +5,8 @@
 Drunix (github.com/npci/drunix) is NPCI's open-source, enterprise-grade DLT —
 an enhanced fork of Hyperledger Fabric, **backwards compatible with Fabric
 v2.5.x**. The WAPSI chaincode is written against the standard Fabric
-`contractapi`, so it is designed to deploy on Drunix without chaincode changes;
-the Drunix network path still requires validation in a Drunix environment.
+`contractapi`, and has been deployed successfully on the local Drunix test
+network with the committed chaincode.
 
 Drunix features relevant to WAPSI:
 
@@ -18,7 +18,11 @@ Drunix features relevant to WAPSI:
 | Lite Peer / Committing Peer split | Scales endorsement-heavy attestation bursts during fraud waves |
 | Private data collections (KeyDB transient store) | Personal data stays off the public channel view |
 
-## Orgs (MVP: 4)
+## Application org model and local network
+
+The application model has four roles; the local Drunix sample network used for
+validation supplies Org1 and Org2. Org3 and Org4 remain the downstream-bank
+and LEA roles for the full multi-bank deployment.
 
 - **Org1MSP** — victim's bank (SBI)
 - **Org2MSP** — receiving bank (HDFC)

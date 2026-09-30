@@ -33,6 +33,12 @@ fetch_drunix() {
     log "Cloning npci/drunix ..."
     git clone --depth 1 https://github.com/npci/drunix.git "$WORKDIR/drunix"
   fi
+  # The current Drunix installer places binaries under drunix-network/build,
+  # while test-network/network.sh resolves them from the repository root.
+  # Bridge that layout difference explicitly.
+  if [ ! -e "$WORKDIR/drunix/build" ] && [ -d "$WORKDIR/drunix/drunix-network/build" ]; then
+    ln -s "$WORKDIR/drunix/drunix-network/build" "$WORKDIR/drunix/build"
+  fi
 }
 
 fetch_fabric() {
@@ -51,7 +57,6 @@ up_drunix() {
   log "Starting Drunix network and creating channel $CHANNEL ..."
   # -ca: cryptogen/CA material; -s yugabyte: SQL state store (Drunix feature)
   (cd "$tn" && ./network.sh up createChannel -c "$CHANNEL" -ca -s yugabyte)
-  echo "$tn"
 }
 
 up_fabric() {
@@ -59,7 +64,6 @@ up_fabric() {
   local tn="$WORKDIR/fabric-samples/test-network"
   log "Starting Fabric test-network and creating channel $CHANNEL ..."
   (cd "$tn" && ./network.sh up createChannel -c "$CHANNEL" -ca)
-  echo "$tn"
 }
 
 deploy_cc() {
@@ -72,12 +76,16 @@ main() {
   local tn
   if [ "${FABRIC_FALLBACK:-0}" = "1" ]; then
     log "Fabric fallback mode (chaincode unchanged; note this in the README)"
-    tn="$(up_fabric)"
+    up_fabric
+    tn="$WORKDIR/fabric-samples/test-network"
   else
-    tn="$(up_drunix)" || {
+    if up_drunix; then
+      tn="$WORKDIR/drunix/drunix-network/test-network"
+    else
       log "Drunix bring-up failed — falling back to Fabric test-network"
-      tn="$(up_fabric)"
-    }
+      up_fabric
+      tn="$WORKDIR/fabric-samples/test-network"
+    fi
   fi
   deploy_cc "$tn"
   log "Done. Channel: $CHANNEL · Chaincode: $CC_NAME"
