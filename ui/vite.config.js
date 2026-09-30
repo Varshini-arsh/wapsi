@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // Presentation target: the Fabric gateway. The demo gateway remains
-      // available directly on port 4001 for fallback testing.
-      "/api": "http://localhost:4000",
+      // The seeded four-role walkthrough runs on the demo gateway by default.
+      // Set WAPSI_API=http://localhost:4000 to point the UI at the live ledger.
+      "/api": process.env.WAPSI_API || "http://localhost:4001",
     },
   },
 });
