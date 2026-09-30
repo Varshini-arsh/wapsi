@@ -1,0 +1,6 @@
+Welcome to WAPSI: verifiable fund provenance and restoration for real-time payment fraud.
+When stolen funds move across banks, each institution sees only one part of the trail.
+WAPSI combines bank attestations, a shared ledger, and deterministic tracing across four roles.
+The same case can be evaluated using own-money-first, proportional, FIFO, and LIBR policies.
+Every result conserves the original claim. WAPSI then limits liens to the traced amount, tracks the ninety-day deadline, and requires majority approval before restoration.
+The chaincode is deployed and verified on the Drunix test network. The complete seeded four-role walkthrough runs through the demo gateway, with the Drunix ledger gateway validated separately.
