@@ -1,0 +1,7 @@
+THE FLOW
+Bank attestations -> shared ledger -> deterministic trace
+
+Org1 victim bank | Org2 receiving bank
+Org3 downstream bank | Org4 LEA
+
+Account identities stay tokenised per bank.

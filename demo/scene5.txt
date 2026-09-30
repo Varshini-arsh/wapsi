@@ -1,0 +1,7 @@
+CONTROLLED RESTORATION
+
+Lien is capped at the traced amount.
+90-day deadline becomes RELEASE_ELIGIBLE.
+
+Proposal -> Org1 approval -> Org2 approval
+-> Org3 approval -> majority APPROVED

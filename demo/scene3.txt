@@ -1,0 +1,6 @@
+LIVE VERIFICATION
+Fabric gateway 4000: OK
+Demo gateway 4001: OK
+
+Same chaincode and API contract.
+Drunix-compatible Fabric v2.5 semantics.

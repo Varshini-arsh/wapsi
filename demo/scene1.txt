@@ -1,0 +1,6 @@
+WAPSI
+Verifiable fund provenance and restoration
+DRUNIX HACKATHON | NPCI x Citi
+
+Fraud money moves across banks in seconds.
+WAPSI proves the traced amount before restoration.
