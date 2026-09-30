@@ -1,0 +1,17 @@
+{
+  "name": "wapsi-gateway",
+  "version": "1.0.0",
+  "description": "WAPSI REST gateway: bridges the React UI to the Drunix/Fabric chaincode (fabric mode) or an in-memory demo engine (demo mode)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "start:fabric": "WAPSI_MODE=fabric node server.js"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.5",
+    "@hyperledger/fabric-gateway": "^1.12.1",
+    "cors": "^2.8.6",
+    "express": "^4.22.3"
+  }
+}
