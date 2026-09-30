@@ -1,8 +1,8 @@
 WHAT IS PROVEN
 
 Working prototype verified on Fabric fallback.
-UI presentation target: Fabric gateway 4000.
-Demo fallback: gateway 4001.
+UI presentation target: seeded demo gateway 4001.
+Drunix ledger gateway: 4000, validated separately.
 
 Drunix deployment is the next environment validation step.
 Repository: github.com/Varshini-arsh/wapsi
